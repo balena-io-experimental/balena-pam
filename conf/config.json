@@ -1,0 +1,27 @@
+{
+    "apiEndpoint": "https://api.resindev.io",
+    "appUpdatePollInterval": 600000,
+    "applicationId": 2,
+    "applicationName": "TestApp",
+    "deltaEndpoint": "https://delta.resindev.io",
+    "deviceApiKey": "5a04170fe7d73c1a34b64e7216868f4a",
+    "deviceApiKeys": {
+        "api.resindev.io": "5a04170fe7d73c1a34b64e7216868f4a"
+    },
+    "deviceType": "raspberrypi3",
+    "hostname": "resin",
+    "listenPort": 48484,
+    "mixpanelToken": "cb974f32bab01ecc1171937026774b18",
+    "persistentLogging": false,
+    "pubnubPublishKey": "pub-c-f16578f7-d1c2-4793-8c48-433eb6a28427",
+    "pubnubSubscribeKey": "sub-c-aeb194e2-2861-11e8-8f89-fe0057f68997",
+    "registryEndpoint": "registry2.resindev.io",
+    "userId": 4,
+    "username": "g_rich_bayliss1",
+    "uuid": "4d3643dc035c6e659242a63339523549",
+    "vpnEndpoint": "vpn.resindev.io",
+    "vpnPort": 443,
+    "registered_at": 1537968763751,
+    "deviceId": 1,    
+    "public_key": "MIIBCgKCAQEAuknRBlJO6nhMzZriynzPNOKb8685v82Q8TBxeAmQB4WKkk1BoNrO6YFrwSVYjTGJXdsNE67+pwX+ptsmccbgcTB2RY7mnj5rIS988B2iLwbGqbo0CV8OCVk3gzb1d9hcBC1Gc0FCf25dZX8is2cdd45WCggAx254m58mmsKyeTdde4/sd/ooQnNIdaA3tX0pUrh22wWezoSZ9avnmr8e0raCOPCz7sEP/QpgijHEFdipCFPO971YYZQPswLXYUhnINuLe9QpL+7j6GHjh86EzUXOpo7e5Sf91QDemgTnELfEk1m/uywNqoxrZVieP/hr+ONomXECT2+4S8N9+BO5YwIDAQAB"
+}

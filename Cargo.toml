@@ -1,0 +1,17 @@
+[package]
+name = "pam-jwt"
+version = "0.0.1"
+authors = ["Rich Bayliss <rich@resin.io>"]
+
+[lib]
+name = "pam_jwt"
+crate-type = ["cdylib"]
+
+[dependencies]
+pam = { path = "./lib/pam/" }
+jsonwebtoken = "5"
+serde_derive = "1"
+serde = "1"
+serde_json = "1.0"
+base64 = "0.9.3"
+chrono = "*"
