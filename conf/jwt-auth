@@ -1,2 +1,2 @@
-auth sufficient pam_jwt.so
-account sufficient pam_jwt.so
+auth sufficient pam_jwt.so config=/mnt/boot/config.json
+account sufficient pam_jwt.so config=/mnt/boot/config.json

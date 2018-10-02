@@ -54,9 +54,11 @@ impl PamConv {
     /// styles.
     pub fn send(&self, style: PamMessageStyle, msg: &str) -> PamResult<Option<String>> {
         let mut resp_ptr: *const PamResponse = ptr::null();
+        let msg_str = CString::new(msg).unwrap();
+        
         let msg = PamMessage {
             msg_style: style,
-            msg: CString::new(msg).unwrap().as_ptr(),
+            msg: msg_str.as_ptr() as *const _,
         };
 
         let ret = (self.conv)(1, &&msg, &mut resp_ptr, self.appdata_ptr);
@@ -65,7 +67,7 @@ impl PamConv {
             if resp_ptr.is_null() {
                 Ok(None)
             } else {
-                let bytes = unsafe { CStr::from_ptr((*resp_ptr).resp).to_bytes() };
+                let bytes = unsafe { CStr::from_ptr((*resp_ptr).resp as *const _).to_bytes() };
                 Ok(String::from_utf8(bytes.to_vec()).ok())
             }
         } else {

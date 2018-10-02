@@ -83,7 +83,7 @@ impl PamHandle {
     /// See `pam_get_data` in
     /// http://www.linux-pam.org/Linux-PAM-html/mwg-expected-by-module-item.html
     pub unsafe fn get_data<'a, T>(&'a self, key: &str) -> PamResult<&'a T> {
-        let c_key = CString::new(key).unwrap().as_ptr();
+        let c_key = CString::new(key).unwrap().as_ptr() as *const _;
         let mut ptr: *const PamDataT = ptr::null();
         let res = pam_get_data(self, c_key, &mut ptr);
         if PamResultCode::PAM_SUCCESS == res && !ptr.is_null() {
@@ -101,7 +101,7 @@ impl PamHandle {
     /// See `pam_set_data` in
     /// http://www.linux-pam.org/Linux-PAM-html/mwg-expected-by-module-item.html
     pub fn set_data<T>(&self, key: &str, data: Box<T>) -> PamResult<()> {
-        let c_key = CString::new(key).unwrap().as_ptr();
+        let c_key = CString::new(key).unwrap().as_ptr() as *const _;
         let res = unsafe {
             let c_data: Box<PamDataT> = mem::transmute(data);
             pam_set_data(self, c_key, c_data, cleanup::<T>)
@@ -143,7 +143,8 @@ impl PamHandle {
     /// See `pam_set_item` in
     /// http://www.linux-pam.org/Linux-PAM-html/mwg-expected-by-module-item.html
     pub fn set_item_str<T: PamItem>(&mut self, item: &str) -> PamResult<()> {
-        let c_item = CString::new(item).unwrap().as_ptr();
+        let c_item_text = CString::new(item).unwrap();
+        let c_item = c_item_text.as_ptr();
 
         let res = unsafe {
             pam_set_item(self,
@@ -169,13 +170,13 @@ impl PamHandle {
     pub fn get_user(&self, prompt: Option<&str>) -> PamResult<String> {
         let ptr: *mut c_char = ptr::null_mut();
         let c_prompt = match prompt {
-            Some(p) => CString::new(p).unwrap().as_ptr(),
+            Some(p) => CString::new(p).unwrap().as_ptr() as *const _,
             None => ptr::null(),
         };
         let res = unsafe { pam_get_user(self, &ptr, c_prompt) };
         if PamResultCode::PAM_SUCCESS == res && !ptr.is_null() {
             let const_ptr = ptr as *const c_char;
-            let bytes = unsafe { CStr::from_ptr(const_ptr).to_bytes() };
+            let bytes = unsafe { CStr::from_ptr(const_ptr as *const _).to_bytes() };
             String::from_utf8(bytes.to_vec()).map_err(|_| PamResultCode::PAM_CONV_ERR)
         } else {
             Err(res)
